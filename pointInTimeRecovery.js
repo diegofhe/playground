@@ -12,12 +12,17 @@ const {
 } = require('lodash')
 const {DateTime} = require('luxon');
 const {doc} = require('mocha/lib/reporters');
+function getRoundedDate(minutes, d=new Date()) {
 
+  let ms = 1000 * 60 * minutes; // convert minutes to ms
+  let roundedDate = new Date(Math.round(d.getTime() / ms) * ms);
+
+  return roundedDate
+}
 
 async function main(n) {
-  const query =  db.collection('apps/curehub/linesOfTherapy')
-    .where('user', '==', db.doc('users/B1r2iLfz5US1I1zjOKXdPQSTvAY2'))
-  const date = DateTime.now().minus({hours: 4}).toJSDate()
+  const query =  db.collection('accountDeletionsLog')
+  const date = DateTime.now().minus({minutes: 40}).toJSDate()
   const roundedDate = getRoundedDate(1, date)
 
   let readTimestamp = admin.firestore.Timestamp.fromDate(roundedDate)
@@ -33,19 +38,15 @@ async function main(n) {
       readTime: readTimestamp
     });
   const docs = new SerializedDocumentArray(querySnapshot)
-
-  fs.writeFileSync('./lines.json', toJSON(active))
-
-  const file = require('./lines.json')
-  const json = fromJSON(JSON.stringify(file), db)
+  for(const doc of docs) {
+    console.log(doc.ref.path)
+    // await doc.ref.update({
+    //   deletedBy: doc.data.deletedBy,
+    //   user: doc.data.user,
+    //   timestamp: doc.data.timestamp
+    // })
+  }
   console.log('done')
-
-  // await Promise.all(
-  //   json.map(
-  //     s => s.ref.set(s.data,{merge: true})
-  //   )
-  // )
-
 }
 main().then(_ => console.log('done'));
 
