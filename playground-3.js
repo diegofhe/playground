@@ -33,10 +33,7 @@ async function main() {
    const msgs = [
        1,
        2,
-       3,
-       4,
-       5,
-       6
+
    ];
    const promises = msgs.map(m => throttlePromise(()=> write(m)))
    await Promise.all(promises)
