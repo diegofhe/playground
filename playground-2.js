@@ -51,7 +51,7 @@ async function main() {
   let toUse;
   toUse = a;
   toUse.A = true;
-  console.log('a change from master', a)
+  console.log('a DesdeElPR a change from master', a)
   console.log('toUse', toUse)
 
   toUse = b;
