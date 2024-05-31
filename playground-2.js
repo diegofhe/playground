@@ -51,7 +51,7 @@ async function main() {
   let toUse;
   toUse = a;
   toUse.A = true;
-  console.log('a', a)
+  console.log('aDesdeElPR', a)
   console.log('toUse', toUse)
 
   toUse = b;
