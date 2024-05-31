@@ -1,43 +1,42 @@
 const throttledQueue = require('throttled-queue');
-
-
-const throttle = throttledQueue(2, 1000); // at most 5 requests per second.
-async function throttlePromise(fn) {
-    return new Promise((resolve, reject) => {
-        throttle(() => {
-            fn().then(resolve, reject);
-        })
-    });
+const {SerializedDocumentArray, SerializedDocument, fromJSON, toJSON, processParsedJoinJSON} = require('@healthtree/firestore-join');
+const admin = require('firebase-admin');
+admin.initializeApp()
+const db = admin.firestore();
+const { Timestamp } = require('@google-cloud/firestore');
+const fs = require('fs');
+const {
+  get,
+  difference,
+  intersection,
+  sortBy,
+  chunk
+} = require('lodash')
+const {DateTime} = require('luxon');
+const {doc} = require('mocha/lib/reporters');
+const {slug} = require('mocha/lib/utils');
+function a({prop1,prop2,prop5}) {
+  console.log(prop1)
+  console.log(prop2)
+  console.log(prop5)
 }
 
-function write(msg) {
-    return new Promise((resolve, reject) => {
-        console.log(msg)
-        resolve();
-    })
+function atLeastOneIncluded(checkForInclusion, arrayToCheck) {
+  for(const checkForInclusionValue of checkForInclusion) {
+    for(const arrayToCheckValue of arrayToCheck) {
+      if(checkForInclusionValue === arrayToCheckValue){
+        return true
+      }
+    }
+  }
+}
+async function main(n) {
+  const a = await new SerializedDocumentArray.fromQuery(
+    db.collection('apps/curehub/medicalResources/normalizations/Observation')
+    .where('observationMappings', 'array-contains', db.doc('apps/curehub/observationMappings/72253-8'))
+  )
+   console.log(a.map(b => b.ref.path))
 }
 
-async function mainExample() {
-    const msgs = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-    ];
-    const promises = msgs.map(m => throttle(() => write(m)))
-    await Promise.all(promises)
-}
-async function main() {
-   const msgs = [
-       1,
-       2,
+main().then(_ => console.log('done'));
 
-   ];
-   const promises = msgs.map(m => throttlePromise(()=> write(m)))
-   await Promise.all(promises)
-}
-
-main();
-//mainExample();

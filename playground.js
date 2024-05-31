@@ -1,5 +1,8 @@
-// file store
-const fs = require('fs')
-const file = fs.readFileSync('./file.txt')// app.svelte
+const {DateTime, Interval} = require('luxon');
 
-console.log(file)
+function main() {
+  console.log(module.exports.oxford([]))
+}
+main()
+
+

@@ -4,15 +4,35 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha index.spec.js --exit",
+    "notify": "say 'THE JOB HAS EXIT AND IT IS NOT RUNNIG'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@healthtree/firestore-join": "0.5.9",
-    "firebase-admin": "^10.0.0",
+    "@healthtree/firestore-join": "0.5.14",
+    "exponential-backoff": "^3.1.1",
+    "firebase-admin": "^10.3.0",
+    "firebase-scrypt": "^2.2.0",
+    "JSONStream": "^1.3.5",
     "lodash": "^4.17.21",
+    "luxon": "^3.1.0",
+    "moment": "2.24.0",
+    "moment-timezone": "^0.5.26",
+    "p-queue": "^6.6.2",
+    "papaparse": "^5.4.1",
+    "promise-queue": "^2.2.5",
     "smart-deep-sort": "^1.0.2",
+    "split": "^1.0.1",
+    "stream-chain": "^2.2.5",
+    "stream-json": "^1.7.5",
+    "string-similarity-js": "^2.1.4",
     "throttled-queue": "^1.0.7"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0",
+    "sinon": "^14.0.2",
+    "sinon-test": "^3.1.4"
   }
 }
