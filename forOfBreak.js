@@ -8,6 +8,7 @@ async function lsExample() {
         for(const l of letters) {
             if (n === 2) break letters
             console.log(`l ${l}`)
+            process.stdout.write('a')
         }
     }
 }

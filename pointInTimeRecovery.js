@@ -21,8 +21,8 @@ function getRoundedDate(minutes, d=new Date()) {
 }
 
 async function main(n) {
-  const query =  db.collection('accountDeletionsLog')
-  const date = DateTime.now().minus({minutes: 40}).toJSDate()
+  const query =  db.collection('sponsors/')
+  const date = DateTime.now().minus({minutes: 10}).toJSDate()
   const roundedDate = getRoundedDate(1, date)
 
   let readTimestamp = admin.firestore.Timestamp.fromDate(roundedDate)
@@ -40,11 +40,9 @@ async function main(n) {
   const docs = new SerializedDocumentArray(querySnapshot)
   for(const doc of docs) {
     console.log(doc.ref.path)
-    // await doc.ref.update({
-    //   deletedBy: doc.data.deletedBy,
-    //   user: doc.data.user,
-    //   timestamp: doc.data.timestamp
-    // })
+    await doc.ref.update({
+      disease: doc.data.disease,
+    })
   }
   console.log('done')
 }
